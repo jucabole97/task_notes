@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "954013481809",
+    "project_id": "task-notes-lab-app",
+    "storage_bucket": "task-notes-lab-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954013481809:android:8b6b521077c669a2d43170",
+        "android_client_info": {
+          "package_name": "com.example.task_notes_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmLWsGp-HVsByBJu9iE6aVIpGkhrli7dA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
