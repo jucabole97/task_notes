@@ -6,6 +6,6 @@ class SplashPresenter {
   SplashPresenter(this._getPushTokenUsecase);
 
   Future<void> fetchToken() async {
-    return await _getPushTokenUsecase.call();
+    return await _getPushTokenUsecase.execute();
   }
 }

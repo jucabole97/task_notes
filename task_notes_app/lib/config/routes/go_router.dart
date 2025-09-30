@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:task_notes_app/task_notes.dart';
@@ -45,4 +46,8 @@ final router = GoRouter(
 
     return null; // no redirige en otros casos
   },
+  errorPageBuilder: (context, state) => MaterialPage(
+    key: state.pageKey,
+    child: const Scaffold(body: Text('404')),
+  ),
 );

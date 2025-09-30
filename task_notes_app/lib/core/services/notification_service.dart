@@ -2,17 +2,27 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../task_notes.dart';
 
 class NotificationService {
-  static final NotificationService _instance = NotificationService._internal();
-  factory NotificationService() => _instance;
-  NotificationService._internal();
+  final FirebaseMessaging _messaging;
+  final FlutterLocalNotificationsPlugin _localNotifications;
+  final GoRouter _goRouter;
 
-  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _localNotifications =
-      FlutterLocalNotificationsPlugin();
+  NotificationService({
+    FirebaseMessaging? messaging,
+    FlutterLocalNotificationsPlugin? localNotifications,
+    GoRouter? goRouter,
+  }) : _messaging = messaging ?? FirebaseMessaging.instance,
+       _localNotifications =
+           localNotifications ?? FlutterLocalNotificationsPlugin(),
+       _goRouter = goRouter ?? router;
+
+  Stream<RemoteMessage> get onMessage => FirebaseMessaging.onMessage;
+  Stream<RemoteMessage> get onMessageOpenedApp =>
+      FirebaseMessaging.onMessageOpenedApp;
 
   Future<void> init() async {
     await _messaging.requestPermission();
@@ -40,25 +50,25 @@ class NotificationService {
       onDidReceiveNotificationResponse: (response) {
         final payload = response.payload;
         if (payload != null) {
-          router.go(payload);
+          _goRouter.go(payload);
         }
       },
     );
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    onMessage.listen((RemoteMessage message) {
       _showLocalNotification(message);
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    onMessageOpenedApp.listen((RemoteMessage message) {
       final deeplink = message.data['deeplink'];
       if (deeplink != null) {
-        router.go(deeplink);
+        _goRouter.go(deeplink);
       }
     });
 
-    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage?.data['deeplink'] != null) {
-      router.go(initialMessage!.data['deeplink']);
+      _goRouter.go(initialMessage!.data['deeplink']);
     }
   }
 

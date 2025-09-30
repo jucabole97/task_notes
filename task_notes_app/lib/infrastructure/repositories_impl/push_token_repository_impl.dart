@@ -3,7 +3,10 @@ import 'package:task_notes_app/core/services/fcm_service.dart';
 import 'package:task_notes_app/domain/repositories/push_token_repository.dart';
 
 class PushTokenRepositoryImpl implements PushTokenRepository {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final FirebaseMessaging _firebaseMessaging;
+
+  PushTokenRepositoryImpl({FirebaseMessaging? firebaseMessaging})
+    : _firebaseMessaging = firebaseMessaging ?? FirebaseMessaging.instance;
 
   @override
   Future<void> getToken() async {

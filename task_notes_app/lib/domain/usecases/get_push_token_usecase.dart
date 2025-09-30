@@ -5,7 +5,7 @@ class GetPushTokenUsecase {
 
   GetPushTokenUsecase(this._repository);
 
-  Future<void> call() async {
+  Future<void> execute() async {
     return await _repository.getToken();
   }
 }

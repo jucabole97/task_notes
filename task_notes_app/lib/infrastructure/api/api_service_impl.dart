@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../../core/core.dart';
+import 'package:task_notes_app/task_notes.dart';
 
-class ApiService {
-  final _client = HttpClient();
+class ApiServiceImpl implements ApiService {
+  final HttpClient _client;
+
+  ApiServiceImpl({HttpClient? client}) : _client = client ?? HttpClient();
+
   final String baseUrl = ApiConfig.baseUrl;
 
   /// GET
+  @override
   Future<dynamic> get(String endpoint, {bool isList = false}) async {
-    final uri = Uri.parse('http://192.168.1.14:3000/$endpoint');
+    final uri = Uri.parse('$baseUrl$endpoint');
 
     final request = await _client.getUrl(uri);
 
@@ -19,17 +23,15 @@ class ApiService {
   }
 
   /// GET BY ID
+  @override
   Future<dynamic> getById(String resource, String id) async {
-    final uri = Uri.parse('http://192.168.1.14:3000/$resource/$id');
-
-    final response = await get('$resource/$id');
-
-    return _handleResponse(response, uri);
+    return get('$resource/$id');
   }
 
   /// POST
+  @override
   Future<dynamic> post(String endpoint, Map<String, dynamic> body) async {
-    final uri = Uri.parse('http://192.168.1.14:3000/$endpoint');
+    final uri = Uri.parse('$baseUrl$endpoint');
 
     final request = await _client.postUrl(uri);
 
@@ -42,6 +44,7 @@ class ApiService {
   }
 
   /// PUT
+  @override
   Future<dynamic> put(String endpoint, Map<String, dynamic> body) async {
     final uri = Uri.parse('$baseUrl$endpoint');
 
@@ -56,6 +59,7 @@ class ApiService {
   }
 
   /// DELETE
+  @override
   Future<dynamic> delete(String endpoint) async {
     final uri = Uri.parse('$baseUrl$endpoint');
 

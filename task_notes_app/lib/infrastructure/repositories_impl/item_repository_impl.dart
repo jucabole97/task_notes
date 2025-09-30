@@ -28,10 +28,4 @@ class ItemRepositoryImpl implements ItemRepository {
 
     return EmptyItem();
   }
-
-  @override
-  Future<void> clearAll() async {
-    final db = await AppDatabase.instance.database;
-    await db.close();
-  }
 }

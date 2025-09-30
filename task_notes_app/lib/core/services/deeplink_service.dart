@@ -1,14 +1,18 @@
 import 'package:app_links/app_links.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_notes_app/task_notes.dart';
 
 class DeeplinkService {
-  late final AppLinks _appLinks;
+  final AppLinks appLinks;
+  final GoRouter goRouter;
+
+  DeeplinkService({AppLinks? appLinksTest, GoRouter? goRouterTest})
+    : appLinks = appLinksTest ?? AppLinks(),
+      goRouter = goRouterTest ?? router;
 
   Future<void> init() async {
-    _appLinks = AppLinks();
-
     // Escuchar links mientras la app está abierta
-    _appLinks.uriLinkStream.listen((uri) {
+    appLinks.uriLinkStream.listen((uri) {
       _handleUri(uri);
     });
   }
@@ -16,7 +20,7 @@ class DeeplinkService {
   void _handleUri(Uri uri) {
     if (uri.host == 'note' && uri.pathSegments.isNotEmpty) {
       final id = uri.pathSegments.first;
-      router.go('/note/$id');
+      goRouter.go('/note/$id');
     }
   }
 }

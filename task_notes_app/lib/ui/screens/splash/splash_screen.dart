@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:task_notes_app/task_notes.dart';
-import 'package:task_notes_app/ui/screens/splash/widgets/rive_loader.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  final Widget? loader;
+
+  const SplashScreen({super.key, this.loader});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,11 @@ class SplashScreen extends StatelessWidget {
 
         return Scaffold(
           body: Center(
-            child: SizedBox(width: 150, height: 150, child: RiveLoader()),
+            child: SizedBox(
+              width: 150,
+              height: 150,
+              child: loader ?? RiveLoader(),
+            ),
           ),
         );
       },

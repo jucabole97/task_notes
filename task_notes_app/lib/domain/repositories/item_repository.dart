@@ -4,5 +4,4 @@ abstract class ItemRepository {
   Future<void> addItem(Item item);
   Future<List<Item>> getAllItems();
   Future<Item?> getById(String id);
-  Future<void> clearAll();
 }
