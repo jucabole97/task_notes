@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotesModule } from './item/item.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -10,6 +11,9 @@ import { NotificationsModule } from './notifications/notifications.module';
       database: 'tasknotes.db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
     NotesModule,
     NotificationsModule,

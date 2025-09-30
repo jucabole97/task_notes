@@ -6,11 +6,10 @@ import { Type } from "src/item/item.enum";
 @Injectable()
 export class NotificationsService {
     constructor() {
-        const serviceAccount = require('../../firebase-service-account.json');
-        const app = admin.apps.length
+        admin.apps.length
             ? admin.app()
             : admin.initializeApp({
-                credential: admin.credential.cert(serviceAccount),
+                credential: admin.credential.applicationDefault(),
             });
     }
 
