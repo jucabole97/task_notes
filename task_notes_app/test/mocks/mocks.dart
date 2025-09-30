@@ -10,9 +10,6 @@ import 'package:task_notes_app/task_notes.dart';
 class MockFirebaseMessaging extends Mock implements FirebaseMessaging {
   final _controller = StreamController<RemoteMessage>.broadcast();
 
-  @override
-  Stream<RemoteMessage> get onMessage => _controller.stream;
-
   void addMessage(RemoteMessage message) => _controller.add(message);
 
   @override
