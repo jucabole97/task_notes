@@ -26,6 +26,11 @@ jobs:
         with:
           flutter-version: '3.32.6'
 
+      - name: Create env files
+        run: |
+          echo "BASE_API=https://dummy.api" > task_notes_app/.env
+          echo "BASE_API=https://dummy.api" > task_notes_app/test/.env
+    
       - name: Install dependencies
         run: flutter pub get
 
