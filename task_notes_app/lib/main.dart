@@ -16,5 +16,5 @@ Future<void> _initialize() async {
   await Firebase.initializeApp();
   await NotificationService().init();
   await dotenv.load(fileName: ".env");
-  setupDependencies();
+  await setupDependencies();
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_notes_app/task_notes.dart';
 
 class FabMenu extends StatefulWidget {
   final VoidCallback onAddNote;
@@ -20,6 +21,7 @@ class _FabMenuState extends State<FabMenu> {
       children: [
         if (_expanded) ...[
           FloatingActionButton.small(
+            key: WidgetConstants.homeNoteButton,
             heroTag: 'note',
             tooltip: 'Note',
             onPressed: widget.onAddNote,
@@ -27,6 +29,7 @@ class _FabMenuState extends State<FabMenu> {
           ),
           const SizedBox(height: 8),
           FloatingActionButton.small(
+            key: WidgetConstants.homeTaskButton,
             heroTag: 'task',
             tooltip: 'Task',
             onPressed: widget.onAddTask,
@@ -35,6 +38,7 @@ class _FabMenuState extends State<FabMenu> {
           const SizedBox(height: 8),
         ],
         FloatingActionButton(
+          key: WidgetConstants.homeFloatingButton,
           onPressed: () => setState(() => _expanded = !_expanded),
           child: Icon(_expanded ? Icons.close : Icons.add),
         ),

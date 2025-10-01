@@ -13,8 +13,8 @@ class ItemListLoading extends ItemListState {
 }
 
 class ItemListLoaded extends ItemListState {
-  final List<Item> item;
-  const ItemListLoaded(this.item);
+  final List<Item> items;
+  const ItemListLoaded(this.items);
 }
 
 class ItemListError extends ItemListState {

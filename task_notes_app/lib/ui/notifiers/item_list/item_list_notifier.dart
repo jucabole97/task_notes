@@ -13,15 +13,15 @@ class ItemListNotifier extends ChangeNotifier {
   List<Item> get items => _items;
 
   Future<void> loadItems({Item? item}) async {
-    _state = ItemListLoading();
-    notifyListeners();
-
     if (item != null) {
       _items.add(item);
       _state = ItemListLoaded(_items);
       notifyListeners();
       return;
     }
+
+    _state = ItemListLoading();
+    notifyListeners();
 
     try {
       _items = await presenter.loadItems();
@@ -38,6 +38,9 @@ class ItemListNotifier extends ChangeNotifier {
     String? content,
     String? base64Image,
   }) async {
+    _state = ItemListLoading();
+    notifyListeners();
+
     final id = DateTime.now().millisecondsSinceEpoch;
     final item = ItemFactory.create(
       type,
@@ -51,6 +54,7 @@ class ItemListNotifier extends ChangeNotifier {
       await presenter.addItem(item);
       await loadItems(item: item);
     } catch (e) {
+      _state = ItemListError(e.toString());
       notifyListeners();
     }
   }

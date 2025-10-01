@@ -108,3 +108,9 @@ class MockHttpHeaders extends Mock implements HttpHeaders {}
 class MockApiService extends Mock implements ApiService {}
 
 class MockFCMService extends Mock implements FCMService {}
+
+class MockItemDetailPresenter extends Mock implements ItemDetailPresenter {}
+
+class MockItemsPresenter extends Mock implements ItemsPresenter {}
+
+class MockSplashPresenter extends Mock implements SplashPresenter {}

@@ -84,6 +84,7 @@ class _AddItemSheetState extends State<AddItemSheet> {
             ),
             const SizedBox(height: 12),
             TextField(
+              key: WidgetConstants.addItemTitleTextField,
               controller: _titleController,
               decoration: const InputDecoration(
                 labelText: 'Título',
@@ -93,6 +94,7 @@ class _AddItemSheetState extends State<AddItemSheet> {
             if (widget.type == ItemType.note) ...[
               const SizedBox(height: 12),
               TextField(
+                key: Key('task_notes-add_item-content_textfield'),
                 controller: _contentController,
                 decoration: const InputDecoration(
                   labelText: 'Contenido',
@@ -114,12 +116,14 @@ class _AddItemSheetState extends State<AddItemSheet> {
             Row(
               children: [
                 ElevatedButton.icon(
+                  key: WidgetConstants.addItemImageButton,
                   onPressed: _pickImage,
                   icon: const Icon(Icons.image),
                   label: const Text('Imagen'),
                 ),
                 const Spacer(),
                 ElevatedButton.icon(
+                  key: WidgetConstants.addItemSaveButton,
                   onPressed: () => _saveItem(context),
                   icon: const Icon(Icons.save),
                   label: const Text('Guardar'),
