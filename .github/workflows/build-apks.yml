@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: 📱 Manual Build APKs (dev & prod)
+name: 📱 Manual Build APKs (dev or prod)
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -29,6 +29,11 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.32.6'
+
+      - name: 📄 Create env files
+        run: |
+          echo "BASE_API=https://fake.api" > .env
+          echo "BASE_API=https://fake.api" > test/.env
 
       - name: 📦 Install dependencies
         run: flutter pub get
