@@ -20,6 +20,9 @@ on:
 jobs:
   build-apks:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: task_notes_app
 
     steps:
       - name: ⬇️ Checkout
