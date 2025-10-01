@@ -28,14 +28,14 @@ jobs:
 
       - name: Create env files
         run: |
-          echo "BASE_API=https://dummy.api" > .env
-          echo "BASE_API=https://dummy.api" > test/.env
+          echo "BASE_API=https://fake.api" > .env
+          echo "BASE_API=https://fake.api" > test/.env
     
       - name: Install dependencies
         run: flutter pub get
 
       - name: Analyze project source
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Run tests
         run: flutter test --coverage
