@@ -12,7 +12,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
-    expect(find.byType(ListTile), findsWidgets);
+    expect(find.byType(Card), findsWidgets);
   });
 
   testWidgets('validate show bottomSheet to create a note', (tester) async {
