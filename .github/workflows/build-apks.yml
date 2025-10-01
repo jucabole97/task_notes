@@ -20,6 +20,7 @@ on:
 jobs:
   build-apks:
     runs-on: ubuntu-latest
+    environment: App
     defaults:
       run:
         working-directory: task_notes_app
@@ -35,6 +36,11 @@ jobs:
 
       - name: 📦 Install dependencies
         run: flutter pub get
+
+      - name: 📝 Create .env file
+        run: |
+          echo "BASE_API=${{ secrets.BASE_API }}" >> .env
+          echo "BASE_API=https://fake.api" >> test/.env
 
       # --- Build APK ---
       - name: 🏗️ Build APK
