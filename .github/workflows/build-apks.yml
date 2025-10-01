@@ -40,6 +40,7 @@ jobs:
       - name: 📝 Create .env file
         run: |
           echo "BASE_API=${{ secrets.BASE_API }}" >> .env
+          echo "BASE_API=https://fake.api" >> test/.env
 
       # --- Build APK ---
       - name: 🏗️ Build APK
