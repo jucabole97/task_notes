@@ -22,43 +22,98 @@ class ItemsList extends StatelessWidget {
       return const Center(child: Text('No items yet'));
     }
 
-    return ListView.builder(
-      itemCount: notifier.items.length,
-      itemBuilder: (_, i) {
-        final item = notifier.items[i];
-        return ListTile(
-          leading: Icon(item is Task ? Icons.check_box_outlined : Icons.note),
-          title: Text(item.title),
-          subtitle: item is Note ? Text(item.content) : null,
-          onTap: () => _showDetail(context, item),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: ListView.separated(
+        itemCount: notifier.items.length,
+        itemBuilder: (_, i) {
+          final item = notifier.items[i];
+
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: item is Task
+                        ? Colors.indigo[400]
+                        : Colors.amber[700],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        item is Task ? Icons.check_box_outlined : Icons.note,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          item is Task ? 'Tarea' : 'Nota',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      if (item is Task && item.base64Image != null) ...[
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () => _showDetail(context, item),
+                          icon: Icon(Icons.attach_file),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    item.title,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                if (item is Note)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                      right: 8,
+                      bottom: 8,
+                    ),
+                    child: Text(item.content),
+                  ),
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (_, index) {
+          double height = 8;
+          if (index == (notifier.items.length - 1)) height = 32;
+          return SizedBox(height: height);
+        },
+      ),
     );
   }
 
   void _showDetail(BuildContext context, Item item) {
+    final task = item as Task;
     showModalBottomSheet(
       context: context,
       builder: (_) => Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              item.title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            if (item is Note) Text(item.content),
-            if (item is Task && item.base64Image != null) ...[
-              const SizedBox(height: 16),
-              Image.memory(
-                base64Decode(item.base64Image!),
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ],
-          ],
+        child: Image.memory(
+          base64Decode(task.base64Image!),
+          width: double.infinity,
+          fit: BoxFit.cover,
         ),
       ),
     );

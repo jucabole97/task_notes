@@ -55,14 +55,14 @@ class _AddItemSheetState extends State<AddItemSheet> {
       base64Image = base64Encode(bytes);
     }
 
+    Navigator.pop(context);
+
     await context.read<ItemListNotifier>().addItem(
       title: title,
       type: widget.type,
       content: content,
       base64Image: base64Image,
     );
-
-    Navigator.pop(context);
   }
 
   @override
@@ -115,12 +115,13 @@ class _AddItemSheetState extends State<AddItemSheet> {
               ),
             Row(
               children: [
-                ElevatedButton.icon(
-                  key: WidgetConstants.addItemImageButton,
-                  onPressed: _pickImage,
-                  icon: const Icon(Icons.image),
-                  label: const Text('Imagen'),
-                ),
+                if (widget.type == ItemType.task)
+                  ElevatedButton.icon(
+                    key: WidgetConstants.addItemImageButton,
+                    onPressed: _pickImage,
+                    icon: const Icon(Icons.image),
+                    label: const Text('Imagen'),
+                  ),
                 const Spacer(),
                 ElevatedButton.icon(
                   key: WidgetConstants.addItemSaveButton,

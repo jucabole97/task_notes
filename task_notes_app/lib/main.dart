@@ -5,16 +5,16 @@ import 'package:task_notes_app/app.dart';
 import 'package:task_notes_app/config/di/di.dart';
 import 'package:task_notes_app/core/services/notification_service.dart';
 
-void main() async {
-  await _initialize();
+Future<void> mainCommon({bool useFake = false}) async {
+  await _initialize(useFake: useFake);
 
   runApp(App());
 }
 
-Future<void> _initialize() async {
+Future<void> _initialize({bool useFake = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await NotificationService().init();
   await dotenv.load(fileName: ".env");
-  await setupDependencies();
+  await setupDependencies(useFake: useFake);
 }

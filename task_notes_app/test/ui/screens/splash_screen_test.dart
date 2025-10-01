@@ -35,17 +35,4 @@ void main() {
     );
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
-
-  // testWidgets('cuando estado es SplashLoaded navega a /home', (tester) async {
-  //   await tester.pumpWidget(
-  //     buildTestable(const SplashScreen(loader: CircularProgressIndicator())),
-  //   );
-
-  //   // Forzamos el estado a SplashLoaded
-  //   // notifier.state(SplashLoaded());
-
-  //   await tester.pumpAndSettle(Duration(seconds: 3));
-
-  //   expect(find.text('HomeScreen'), findsOneWidget);
-  // });
 }
