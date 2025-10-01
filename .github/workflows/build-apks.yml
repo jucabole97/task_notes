@@ -1,0 +1,48 @@
+# This is a basic workflow that is manually triggered
+
+name: 📱 Manual Build APKs (dev or prod)
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      flavor:
+        description: '¿Qué apk deseas compilar?'
+        required: true
+        default: 'dev'
+        type: choice
+        options: 
+          - dev
+          - prod
+
+jobs:
+  build-apks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: task_notes_app
+
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.6'
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      # --- Build APK ---
+      - name: 🏗️ Build APK
+        run: flutter build apk --flavor ${{ github.event.inputs.flavor }} -t lib/main_${{ github.event.inputs.flavor }}.dart
+
+      # --- Upload artifacts ---
+      - name: 📤 Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-apks
+          path: task_notes_app/build/app/outputs/flutter-apk/*.apk
