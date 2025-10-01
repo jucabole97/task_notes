@@ -18,3 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 Para ejecutar deeplink desde terminal:
 
 - adb shell am start -a android.intent.action.VIEW -d "task-notes-app://note/1" com.example.task_notes_app
+
+Para ejecutar test de integración:
+
+- flutter drive --driver integration_test/integration_test_driver.dart --target integration_test/splash/splash_screen.dart --flavor dev -t lib/main_dev.dart -d SM M236B

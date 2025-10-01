@@ -1,5 +1,5 @@
 import 'package:task_notes_app/main.dart';
 
-void main() {
-  mainCommon(useFake: true);
+void main() async {
+  await mainCommon(useFake: true);
 }
