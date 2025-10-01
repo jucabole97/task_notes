@@ -38,7 +38,7 @@ jobs:
 
       # --- Build APK ---
       - name: 🏗️ Build APK
-        run: flutter build apk --flavor ${{ github.event.inputs.flavor }} -t task_notes_app/lib/main_${{ github.event.inputs.flavor }}.dart
+        run: flutter build apk --flavor ${{ github.event.inputs.flavor }} -t lib/main_${{ github.event.inputs.flavor }}.dart
 
       # --- Upload artifacts ---
       - name: 📤 Upload APKs
