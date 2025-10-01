@@ -49,7 +49,7 @@ jobs:
 
       - name: 🗂 Prepare site root
         run: |
-          mkdir -p siye/coverage
+          mkdir -p site/coverage
           cp -r coverage/html/* site/coverage
           # index.html con enlace a coverage
           cat > site/index.html <<'EOF'
