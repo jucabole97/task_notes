@@ -53,7 +53,7 @@ jobs:
         run: |
           mkdir -p site/coverage
           cp -r coverage/html/* site/coverage
-          # index.html con enlace a coverage
+          touch site/.nojekyll
           cat > site/index.html <<'EOF'
           <!doctype html>
           <meta charset="utf-8">
