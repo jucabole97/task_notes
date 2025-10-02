@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:task_notes_app/domain/domain.dart';
+import 'package:task_notes_app/task_notes.dart';
 
 import '../../mocks/mocks.dart';
 
