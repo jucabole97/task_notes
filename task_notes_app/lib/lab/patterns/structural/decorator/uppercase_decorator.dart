@@ -1,4 +1,4 @@
-import 'package:task_notes_app/task_notes.dart';
+import 'package:task_notes_app/lab/patterns/patterns.dart';
 
 class UppercaseDecorator extends ItemDecorator {
   UppercaseDecorator(super.wrappee);

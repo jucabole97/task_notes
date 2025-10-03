@@ -1,19 +1,63 @@
-# task_notes_app
+📘 task_notes_app – Arquitectura y Organización
 
-A new Flutter project.
+🚀 Visión General
 
-## Getting Started
+Este proyecto sigue una arquitectura limpia (Clean Architecture) con influencias de MVP/MVVM, separando responsabilidades en capas bien definidas:
 
-This project is a starting point for a Flutter application.
+- UI → Presentación y estado reactivo.
+- Domain → Reglas de negocio, entidades y casos de uso.
+- Infrastructure → Implementaciones concretas (API, DB, mappers).
+- Core → Servicios transversales y configuración global.
 
-A few resources to get you started if this is your first Flutter project:
+📂 Estructura de Carpetas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+lib/
+ ├── core/              # Servicios y utilidades transversales
+ │    ├── constants/
+ │    ├── services/     # Ej: deeplink_service, notification_service
+ │    └── theme/
+ │
+ ├── domain/            # Capa de negocio
+ │    ├── entities/     # Modelos puros
+ │    ├── factories/    # Creación controlada de objetos
+ │    ├── patterns/     # Ejemplos de patrones GoF
+ │    ├── repositories/ # Repositorios abstractos
+ │    ├── services/     # Interfaces de servicios
+ │    └── usecases/     # Casos de uso
+ │
+ ├── infrastructure/    # Implementaciones concretas
+ │    ├── api/          # ApiService con HttpClient
+ │    ├── db/           # Persistencia local (Prueba)
+ │    ├── mappers/      # Transformación DTO ↔ Entidad
+ │    └── repositories_impl/
+ │
+ ├── ui/                # Presentación
+ │    ├── constants/
+ │    ├── extensions/
+ │    ├── notifiers/    # Manejo de estado (ChangeNotifier)
+ │    ├── presenters/   # Lógica de presentación
+ │    ├── screens/      # Pantallas
+ │    └── widgets/      # Componentes UI reutilizables
+ │
+ ├── app.dart           # Configuración principal de la app
+ ├── main_dev.dart      # Entry point dev
+ └── main_prod.dart     # Entry point prod
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+🔄 Flujo de Dependencias
+
+- UI (Notifiers/Presenters) → llaman a UseCases.
+- UseCases → dependen de Repositories (abstractos).
+- Repositories → implementados en Infrastructure (API, DB).
+- Core → provee DI, rutas y servicios globales.
+
+🛠 Inyección de Dependencias
+
+- Se usa get_it en config/di.dart:
+- Se registran implementaciones concretas (ItemRepositoryImpl, ApiServiceImpl).
+- Se exponen como abstracciones (ItemRepository, GetService, PostService).
+- La UI recibe Presenter y Notifier ya configurados.
+
+👉 Consideraciones:
 
 Para ejecutar deeplink desde terminal:
 

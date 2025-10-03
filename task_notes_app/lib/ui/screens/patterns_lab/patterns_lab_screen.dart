@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_notes_app/task_notes.dart';
 
+import '../../../lab/patterns/patterns.dart';
+
 enum Pattern { factory, singleton, adapter, template, strategy, decorator }
 
 class PatternsLabScreen extends StatelessWidget {

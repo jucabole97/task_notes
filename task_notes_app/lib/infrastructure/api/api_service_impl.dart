@@ -3,7 +3,13 @@ import 'dart:io';
 
 import 'package:task_notes_app/task_notes.dart';
 
-class ApiServiceImpl implements ApiService {
+class ApiServiceImpl
+    implements
+        GetService,
+        GetByIdService,
+        PostService,
+        PutService,
+        DeleteService {
   final HttpClient _client;
 
   ApiServiceImpl({HttpClient? client}) : _client = client ?? HttpClient();

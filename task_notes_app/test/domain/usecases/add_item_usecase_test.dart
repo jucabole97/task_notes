@@ -28,7 +28,7 @@ void main() {
     test('llama a repository.addItem si el título es válido', () async {
       final note = Note(id: 2, title: 'Mi nota', content: 'contenido');
 
-      when(() => mockRepository.addItem(note)).thenAnswer((_) async {});
+      when(() => mockRepository.addItem(note)).thenAnswer((_) async => note);
 
       await useCase.execute(note);
 
@@ -38,7 +38,7 @@ void main() {
     test('pasa el mismo Item recibido al repositorio', () async {
       final note = Note(id: 3, title: 'Otra nota', content: 'contenido');
 
-      when(() => mockRepository.addItem(any())).thenAnswer((_) async {});
+      when(() => mockRepository.addItem(any())).thenAnswer((_) async => note);
 
       await useCase.execute(note);
 

@@ -10,7 +10,21 @@ class ItemsPresenter {
     return await getItemsUseCase.execute();
   }
 
-  Future<void> addItem(Item item) async {
-    await addItemUseCase.execute(item);
+  Future<Item> addItem({
+    required String title,
+    ItemType type = ItemType.note,
+    String? content,
+    String? base64Image,
+  }) async {
+    final id = DateTime.now().millisecondsSinceEpoch;
+    final item = ItemFactory.create(
+      type,
+      id,
+      title,
+      content: content,
+      base64Image: base64Image,
+      token: FCMService().token,
+    );
+    return await addItemUseCase.execute(item);
   }
 }

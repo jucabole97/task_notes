@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../task_notes.dart';
+import 'package:task_notes_app/lab/patterns/creational/singleton/item_singleton.dart';
 
 class SingletonDemo extends StatelessWidget {
   const SingletonDemo({super.key});

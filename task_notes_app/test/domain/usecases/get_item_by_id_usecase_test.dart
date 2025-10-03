@@ -28,14 +28,16 @@ void main() {
       expect(item, isA<Note>());
     });
 
-    test('get item by id response null', () async {
-      when(() => mockRepository.getById('2')).thenAnswer((_) async => null);
+    test('get item by id response EmptyItem', () async {
+      when(
+        () => mockRepository.getById('2'),
+      ).thenAnswer((_) async => EmptyItem());
 
       final item = await useCase.execute('2');
 
       verify(() => mockRepository.getById('2')).called(1);
 
-      expect(item, isNull);
+      expect(item, isA<EmptyItem>());
     });
   });
 }

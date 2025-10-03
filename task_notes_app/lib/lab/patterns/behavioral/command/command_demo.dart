@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_notes_app/domain/patterns/behavioral/command/item_command.dart';
+import 'package:task_notes_app/lab/patterns/behavioral/command/item_command.dart';
 
 class CommandDemo extends StatelessWidget {
   const CommandDemo({super.key});

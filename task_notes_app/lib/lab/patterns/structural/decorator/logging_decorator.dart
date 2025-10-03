@@ -1,4 +1,4 @@
-import 'package:task_notes_app/task_notes.dart';
+import 'package:task_notes_app/lab/patterns/patterns.dart';
 
 class LoggingDecorator extends ItemDecorator {
   LoggingDecorator(super.wrappee);

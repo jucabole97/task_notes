@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../task_notes.dart';
+import 'package:task_notes_app/lab/patterns/behavioral/template/item_template.dart';
 
 class TemplateDemo extends StatelessWidget {
   const TemplateDemo({super.key});

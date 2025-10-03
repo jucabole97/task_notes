@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../task_notes.dart';
+import 'package:task_notes_app/lab/patterns/structural/adapter/item_adapter.dart';
 
 class AdapterDemo extends StatelessWidget {
   const AdapterDemo({super.key});

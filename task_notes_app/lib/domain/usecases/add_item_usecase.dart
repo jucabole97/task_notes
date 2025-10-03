@@ -5,10 +5,10 @@ class AddItemUseCase {
 
   AddItemUseCase(this.repository);
 
-  Future<void> execute(Item item, {String? base64Image}) async {
+  Future<Item> execute(Item item, {String? base64Image}) async {
     if (item.title.trim().isEmpty) {
       throw ArgumentError('title must not be empty');
     }
-    await repository.addItem(item);
+    return await repository.addItem(item);
   }
 }

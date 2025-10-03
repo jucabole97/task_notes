@@ -24,11 +24,11 @@ void main() {
     expect(item?.id, 1);
   });
 
-  test('getItemById return null when has error', () async {
-    when(() => useCase.execute('2')).thenAnswer((_) async => null);
+  test('getItemById return EmptyItem when has error', () async {
+    when(() => useCase.execute('2')).thenAnswer((_) async => EmptyItem());
 
     final item = await presenter.getItemById('2');
 
-    expect(item, isNull);
+    expect(item, isA<EmptyItem>());
   });
 }

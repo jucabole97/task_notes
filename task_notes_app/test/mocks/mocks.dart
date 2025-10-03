@@ -105,7 +105,15 @@ class MockHttpClientResponse extends Mock implements HttpClientResponse {}
 
 class MockHttpHeaders extends Mock implements HttpHeaders {}
 
-class MockApiService extends Mock implements ApiService {}
+class MockGetService extends Mock implements GetService {}
+
+class MockGetByIdService extends Mock implements GetByIdService {}
+
+class MockPostService extends Mock implements PostService {}
+
+class MockPutService extends Mock implements PutService {}
+
+class MockDeleteService extends Mock implements DeleteService {}
 
 class MockFCMService extends Mock implements FCMService {}
 

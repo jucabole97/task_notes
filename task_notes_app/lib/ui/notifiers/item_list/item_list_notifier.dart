@@ -3,33 +3,24 @@ import 'package:flutter/material.dart';
 import '../../../task_notes.dart';
 
 class ItemListNotifier extends ChangeNotifier {
-  final ItemsPresenter presenter;
+  final ItemsPresenter _presenter;
   ItemListState _state = const ItemListInitial();
   ItemListState get state => _state;
 
-  ItemListNotifier({required this.presenter});
+  ItemListNotifier(this._presenter);
 
   List<Item> _items = [];
   List<Item> get items => _items;
 
-  Future<void> loadItems({Item? item}) async {
-    if (item != null) {
-      _items.add(item);
-      _state = ItemListLoaded(_items);
-      notifyListeners();
-      return;
-    }
-
-    _state = ItemListLoading();
-    notifyListeners();
+  Future<void> loadItems() async {
+    _setState(ItemListLoading());
 
     try {
-      _items = await presenter.loadItems();
-      _state = ItemListLoaded(_items);
+      _items = await _presenter.loadItems();
+      _setState(ItemListLoaded(_items));
     } catch (e) {
-      _state = ItemListError(e.toString());
+      _setState(ItemListError(e.toString()));
     }
-    notifyListeners();
   }
 
   Future<void> addItem({
@@ -38,24 +29,26 @@ class ItemListNotifier extends ChangeNotifier {
     String? content,
     String? base64Image,
   }) async {
-    _state = ItemListLoading();
-    notifyListeners();
-
-    final id = DateTime.now().millisecondsSinceEpoch;
-    final item = ItemFactory.create(
-      type,
-      id,
-      title,
-      content: content,
-      base64Image: base64Image,
-      token: FCMService().token,
-    );
+    _setState(ItemListLoading());
     try {
-      await presenter.addItem(item);
-      await loadItems(item: item);
+      final item = await _presenter.addItem(
+        title: title,
+        type: type,
+        content: content,
+        base64Image: base64Image,
+      );
+      if (item is! EmptyItem) {
+        _items.add(item);
+        _setState(ItemListLoaded(_items));
+        return;
+      }
     } catch (e) {
-      _state = ItemListError(e.toString());
-      notifyListeners();
+      _setState(ItemListError(e.toString()));
     }
+  }
+
+  void _setState(ItemListState newState) {
+    _state = newState;
+    notifyListeners();
   }
 }

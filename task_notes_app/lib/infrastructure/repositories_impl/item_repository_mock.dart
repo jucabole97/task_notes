@@ -22,9 +22,10 @@ class ItemRepositoryMock implements ItemRepository {
           ];
 
   @override
-  Future<void> addItem(Item item) {
+  Future<Item> addItem(Item item) {
     return Future.delayed(const Duration(milliseconds: 500), () {
       items.add(item);
+      return item;
     });
   }
 
@@ -36,7 +37,7 @@ class ItemRepositoryMock implements ItemRepository {
   }
 
   @override
-  Future<Item?> getById(String id) {
+  Future<Item> getById(String id) {
     return Future.delayed(const Duration(milliseconds: 500), () {
       final defaultItem = Task(id: 3, title: 'Hacer curso de Udemy');
       return items.firstWhere(

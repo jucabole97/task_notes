@@ -5,12 +5,16 @@ import 'package:task_notes_app/task_notes.dart';
 import '../../mocks/mocks.dart';
 
 void main() {
-  late MockApiService mockApi;
+  late MockGetService mockGetApi;
+  late MockGetByIdService mockGetByIdApi;
+  late MockPostService mockPostApi;
   late ItemRepositoryImpl repository;
 
   setUp(() {
-    mockApi = MockApiService();
-    repository = ItemRepositoryImpl(mockApi);
+    mockGetApi = MockGetService();
+    mockGetByIdApi = MockGetByIdService();
+    mockPostApi = MockPostService();
+    repository = ItemRepositoryImpl(mockGetApi, mockGetByIdApi, mockPostApi);
   });
 
   group('ItemRepositoryImpl', () {
@@ -18,13 +22,13 @@ void main() {
       final note = Note(id: 1, title: 'Nota', content: 'Contenido');
 
       when(
-        () => mockApi.post(ApiConfig.itemUrl, any()),
+        () => mockPostApi.post(ApiConfig.itemUrl, any()),
       ).thenAnswer((_) async => {});
 
       await repository.addItem(note);
 
       verify(
-        () => mockApi.post(ApiConfig.itemUrl, ItemMapper.toJson(note)),
+        () => mockPostApi.post(ApiConfig.itemUrl, ItemMapper.toJson(note)),
       ).called(1);
     });
 
@@ -47,7 +51,7 @@ void main() {
       ];
 
       when(
-        () => mockApi.get(ApiConfig.itemUrl, isList: true),
+        () => mockGetApi.get(ApiConfig.itemUrl, isList: true),
       ).thenAnswer((_) async => jsonList);
 
       final result = await repository.getAllItems();
@@ -66,7 +70,7 @@ void main() {
       };
 
       when(
-        () => mockApi.get('${ApiConfig.itemUrl}/1'),
+        () => mockGetByIdApi.getById(ApiConfig.itemUrl, '1'),
       ).thenAnswer((_) async => json);
 
       final result = await repository.getById('1');
@@ -77,7 +81,7 @@ void main() {
 
     test('getById devuelve EmptyItem cuando la respuesta no es Map', () async {
       when(
-        () => mockApi.get('${ApiConfig.itemUrl}/99'),
+        () => mockGetByIdApi.getById(ApiConfig.itemUrl, '99'),
       ).thenAnswer((_) async => 'string inesperado');
 
       final result = await repository.getById('99');

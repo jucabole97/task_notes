@@ -16,7 +16,7 @@ final router = GoRouter(
     GoRoute(
       path: '/home',
       builder: (_, __) => ChangeNotifierProvider(
-        create: (_) => ItemListNotifier(presenter: sl())..loadItems(),
+        create: (_) => ItemListNotifier(sl())..loadItems(),
         child: HomeScreen(),
       ),
     ),

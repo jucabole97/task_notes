@@ -51,9 +51,9 @@ void main() {
   test('addItem', () async {
     when(
       () => addItemUseCase.execute(itemList.first),
-    ).thenAnswer((_) async => Future<void>.value());
+    ).thenAnswer((_) async => itemList.first);
 
-    await presenter.addItem(itemList.first);
+    await presenter.addItem(title: 'Hacer la tarea', type: ItemType.task);
 
     verify(() => addItemUseCase.execute(itemList.first)).called(1);
   });

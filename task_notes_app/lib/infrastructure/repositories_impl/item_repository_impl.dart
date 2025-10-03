@@ -1,19 +1,30 @@
 import '../../task_notes.dart';
 
 class ItemRepositoryImpl implements ItemRepository {
-  final ApiService _apiService;
+  final GetService _getService;
+  final GetByIdService _getByIdService;
+  final PostService _postService;
 
-  ItemRepositoryImpl(this._apiService);
+  ItemRepositoryImpl(this._getService, this._getByIdService, this._postService);
 
   @override
-  Future<void> addItem(Item item) async {
-    await _apiService.post(ApiConfig.itemUrl, ItemMapper.toJson(item));
+  Future<Item> addItem(Item item) async {
+    final response = await _postService.post(
+      ApiConfig.itemUrl,
+      ItemMapper.toJson(item),
+    );
+
+    if (response is Map<String, dynamic>) {
+      return ItemMapper.fromJson(response);
+    }
+
+    return EmptyItem();
   }
 
   @override
   Future<List<Item>> getAllItems() async {
     final items =
-        await _apiService.get(ApiConfig.itemUrl, isList: true)
+        await _getService.get(ApiConfig.itemUrl, isList: true)
             as List<Map<String, dynamic>>;
 
     return items.map((json) => ItemMapper.fromJson(json)).toList();
@@ -21,7 +32,7 @@ class ItemRepositoryImpl implements ItemRepository {
 
   @override
   Future<Item> getById(String id) async {
-    final item = await _apiService.get('${ApiConfig.itemUrl}/$id');
+    final item = await _getByIdService.getById(ApiConfig.itemUrl, id);
     if (item is Map<String, dynamic>) {
       return ItemMapper.fromJson(item);
     }

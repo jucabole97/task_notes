@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_notes_app/task_notes.dart';
+import 'package:task_notes_app/lab/patterns/patterns.dart';
 
 class DecoratorDemo extends StatelessWidget {
   const DecoratorDemo({super.key});

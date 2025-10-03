@@ -11,7 +11,7 @@ void main() {
 
   setUp(() {
     mockPresenter = MockItemsPresenter();
-    notifier = ItemListNotifier(presenter: mockPresenter);
+    notifier = ItemListNotifier(mockPresenter);
     emittedStates = [];
 
     notifier.addListener(() {
@@ -79,8 +79,8 @@ void main() {
       test('flujo exitoso addItem: Initial -> Loading -> Loaded', () async {
         final item = Task(id: 10, title: 'Task 1');
         when(
-          () => mockPresenter.addItem(any(that: isA<Task>())),
-        ).thenAnswer((_) async => Future<void>.value());
+          () => mockPresenter.addItem(title: 'Task 1', type: ItemType.task),
+        ).thenAnswer((_) async => item);
 
         await notifier.addItem(title: item.title, type: ItemType.task);
 
@@ -93,7 +93,9 @@ void main() {
       });
 
       test('flujo con error en presenter.addItem', () async {
-        when(() => mockPresenter.addItem(any())).thenThrow(Exception('fallo'));
+        when(
+          () => mockPresenter.addItem(title: 'Falla', type: ItemType.task),
+        ).thenThrow(Exception('fallo'));
 
         await notifier.addItem(title: 'Falla', type: ItemType.task);
 
